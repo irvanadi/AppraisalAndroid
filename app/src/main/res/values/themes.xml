@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.AppraisalAndroid" parent="Theme.MaterialComponents.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="toolbarStyle">@style/myToolbar</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">?attr/colorPrimaryVariant</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:titleTextColor">@color/white</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation"> @anim/slide_in</item>
+        <item name="android:windowExitAnimation"> @anim/slide_out</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlayExtended" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30%</item>
+    </style>
+
+    <style name="myToolbar">
+        <item name="titleTextColor">@color/white</item>
+    </style>
+</resources>

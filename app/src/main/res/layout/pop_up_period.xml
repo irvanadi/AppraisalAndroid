@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="20dp"
+    android:paddingBottom="12dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtLayoutName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="Period Name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEditName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtLayoutStartDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:cursorVisible="false"
+        app:layout_constraintTop_toBottomOf="@id/txtLayoutName"
+        app:layout_constraintStart_toStartOf="@id/txtLayoutName"
+        app:layout_constraintEnd_toStartOf="@id/txtLayoutEndDate"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignStart="@id/txtLayoutName"
+        android:hint="Start Date">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEditStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:textColor="@color/black"
+            android:focusableInTouchMode="false"
+            android:cursorVisible="false"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtLayoutEndDate"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:layout_marginStart="10dp"
+        android:focusableInTouchMode="false"
+        app:layout_constraintTop_toBottomOf="@id/txtLayoutName"
+        app:layout_constraintEnd_toEndOf="@id/txtLayoutName"
+        app:layout_constraintStart_toEndOf="@id/txtLayoutStartDate"
+        android:hint="End Date">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEditEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/design_default_color_primary"
+        android:text="Save"
+        android:layout_below="@id/txtLayoutEndDate"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintTop_toBottomOf="@id/txtLayoutStartDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

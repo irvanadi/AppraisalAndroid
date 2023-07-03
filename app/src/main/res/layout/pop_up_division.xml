@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txtLayoutDivision"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_centerHorizontal="true"
+        android:hint="Division">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEditDivision"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/design_default_color_primary"
+        android:text="Save"
+        android:layout_below="@id/txtLayoutDivision"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center"/>
+</RelativeLayout>

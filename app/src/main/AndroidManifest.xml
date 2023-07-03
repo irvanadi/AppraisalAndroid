@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppraisalAndroid"
+        tools:targetApi="31" >
+        <activity
+            android:name=".Page.Employee.MainEmployeeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.Generate.GenerateProcessActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.PeriodActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.GenerateActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.Topic.TopicValueActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.Topic.AssessmentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.TopicActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.Employee.AddEmployeeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.EmployeeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.Admin.Dashboard.Data.DivisionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Page.LoginActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Page.Admin.MainActivity"
+            android:exported="true" />
+    </application>
+
+</manifest>

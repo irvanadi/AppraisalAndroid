@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginTop="4dp">
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Weight of topic_name"/>
+
+    <TextView
+        android:id="@+id/txtValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/txtName"
+        android:textColor="@color/black"
+        android:text=": 0.12931234124"/>
+
+</RelativeLayout>

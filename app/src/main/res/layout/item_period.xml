@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvPeriod"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Name Period"/>
+
+            <TextView
+                android:id="@+id/txtstartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/txtName"
+                app:layout_constraintStart_toStartOf="@id/txtName"
+                android:textColor="@color/black"
+                android:text="26 Jul 2023"/>
+
+            <TextView
+                android:id="@+id/txtDivide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                app:layout_constraintTop_toBottomOf="@id/txtName"
+                app:layout_constraintStart_toEndOf="@id/txtstartDate"
+                app:layout_constraintEnd_toStartOf="@id/txtEndDate"
+                android:textColor="@color/black"
+                android:text="-"/>
+
+            <TextView
+                android:id="@+id/txtEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                app:layout_constraintTop_toBottomOf="@id/txtName"
+                app:layout_constraintStart_toEndOf="@id/txtDivide"
+                android:textColor="@color/black"
+                android:text="26 Jul 2023"/>
+
+<!--            <com.google.android.material.divider.MaterialDivider-->
+<!--                android:id="@+id/divider"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/txtEndDate"-->
+<!--                app:layout_constraintStart_toStartOf="@id/txtName"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:lastItemDecorated="true"-->
+<!--                android:layout_marginTop="8dp"/>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

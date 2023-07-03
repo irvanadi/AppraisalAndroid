@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvGenerate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:elevation="20dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/rlGenerate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name Period"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtName"
+                android:text="26 June 2023 - 27 June 2023"/>
+
+            <ImageButton
+                android:id="@+id/ivExpandable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_down"
+                android:focusable="true"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@id/txtName"
+                android:layout_alignBottom="@id/txtDate"
+                android:layout_marginEnd="20dp"
+                android:contentDescription="ExpandableChild"/>
+
+            <TextView
+                android:id="@+id/detailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtDate"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:text="apsdkasopdkaspodkaspdokaspdokaosd"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

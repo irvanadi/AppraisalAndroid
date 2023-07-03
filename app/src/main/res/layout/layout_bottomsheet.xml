@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shp_top_rounded"
+    android:orientation="vertical"
+    android:id="@+id/llcBottomSheet"
+    >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llcValue"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtComparison"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginTop="4dp"
+            android:text="Comparison Value"
+            android:layout_marginBottom="16dp"/>
+
+<!--        <include-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="match_parent"-->
+<!--            layout="@layout/item_dynamic_text"/>-->
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:text="Save"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
