@@ -73,7 +73,7 @@ public class AppraisalAdapter extends RecyclerView.Adapter<AppraisalAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtName, txtRole, txtDivision, txtPhone;
+        TextView txtName, txtRole;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
