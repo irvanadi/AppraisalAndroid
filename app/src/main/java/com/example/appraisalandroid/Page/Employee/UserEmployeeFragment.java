@@ -1,6 +1,8 @@
 package com.example.appraisalandroid.Page.Employee;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +39,8 @@ public class UserEmployeeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
+                SharedPreferences settings = getActivity().getSharedPreferences("employee_info", Context.MODE_PRIVATE);
+                settings.edit().clear().commit();
                 startActivity(new Intent(getContext(), LoginActivity.class));
                 getActivity().finish();
             }

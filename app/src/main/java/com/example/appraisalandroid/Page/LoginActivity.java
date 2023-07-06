@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -67,14 +68,32 @@ public class LoginActivity extends AppCompatActivity {
                                     if (dataSnapshot.child("email").getValue().toString().equals(user.getEmail())){
                                         if (dataSnapshot.child("role").getValue().toString().equals("3")){
                                             ProgressDialogInstance.dissmisProgress();
+                                            SharedPreferences sharedPreferences = getSharedPreferences("employee_info", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("employee_id", dataSnapshot.getKey());
+                                            editor.putString("role", dataSnapshot.child("role").getValue().toString());
+                                            editor.putString("division", dataSnapshot.child("division_id").getValue().toString());
+                                            editor.apply();
                                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                             finish();
                                         } else if (dataSnapshot.child("role").getValue().toString().equals("2")){
                                             ProgressDialogInstance.dissmisProgress();
+                                            SharedPreferences sharedPreferences = getSharedPreferences("employee_info", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("employee_id", dataSnapshot.getKey());
+                                            editor.putString("role", dataSnapshot.child("role").getValue().toString());
+                                            editor.putString("division", dataSnapshot.child("division_id").getValue().toString());
+                                            editor.apply();
                                             startActivity(new Intent(LoginActivity.this, MainEmployeeActivity.class));
                                             finish();
                                         } else if (dataSnapshot.child("role").getValue().toString().equals("1")){
                                             ProgressDialogInstance.dissmisProgress();
+                                            SharedPreferences sharedPreferences = getSharedPreferences("employee_info", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("employee_id", dataSnapshot.getKey());
+                                            editor.putString("role", dataSnapshot.child("role").getValue().toString());
+                                            editor.putString("division", dataSnapshot.child("division_id").getValue().toString());
+                                            editor.apply();
                                             startActivity(new Intent(LoginActivity.this, MainEmployeeActivity.class));
                                             finish();
                                         }
@@ -117,14 +136,32 @@ public class LoginActivity extends AppCompatActivity {
                         for(DataSnapshot dataSnapshot: snapshot.getChildren()){
                             if (dataSnapshot.child("email").getValue().toString().equals(mFirebaseUser.getEmail())){
                                 if (dataSnapshot.child("role").getValue().toString().equals("3")){
+                                    SharedPreferences sharedPreferences = getSharedPreferences("employee_info", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("employee_id", dataSnapshot.getKey());
+                                    editor.putString("role", dataSnapshot.child("role").getValue().toString());
+                                    editor.putString("division", dataSnapshot.child("division_id").getValue().toString());
+                                    editor.apply();
                                     ProgressDialogInstance.dissmisProgress();
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
                                 } else if (dataSnapshot.child("role").getValue().toString().equals("2")){
+                                    SharedPreferences sharedPreferences = getSharedPreferences("employee_info", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("employee_id", dataSnapshot.getKey());
+                                    editor.putString("role", dataSnapshot.child("role").getValue().toString());
+                                    editor.putString("division", dataSnapshot.child("division_id").getValue().toString());
+                                    editor.apply();
                                     ProgressDialogInstance.dissmisProgress();
                                     startActivity(new Intent(LoginActivity.this, MainEmployeeActivity.class));
                                     finish();
                                 } else if (dataSnapshot.child("role").getValue().toString().equals("1")){
+                                    SharedPreferences sharedPreferences = getSharedPreferences("employee_info", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("employee_id", dataSnapshot.getKey());
+                                    editor.putString("role", dataSnapshot.child("role").getValue().toString());
+                                    editor.putString("division", dataSnapshot.child("division_id").getValue().toString());
+                                    editor.apply();
                                     ProgressDialogInstance.dissmisProgress();
                                     startActivity(new Intent(LoginActivity.this, MainEmployeeActivity.class));
                                     finish();

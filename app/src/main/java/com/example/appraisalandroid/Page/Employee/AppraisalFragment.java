@@ -117,6 +117,7 @@ public class AppraisalFragment extends Fragment {
                                                                 Employee employeePerform = snapshot3.getValue(Employee.class);
                                                                 Log.d(TAG, "onDataChange23: " + employee.getRole());
                                                                 employeePerform.setGenerate_id(generateKey);
+                                                                employeePerform.setKey(snapshot3.getKey());
                                                                 employees.add(employeePerform);
 //                                                                if (employees.size() >= 2){
 //                                                                    Collections.sort(employees, );

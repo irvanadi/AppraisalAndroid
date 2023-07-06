@@ -160,6 +160,7 @@ public class GenerateProcessActivity extends AppCompatActivity {
     private String selectedValue;
     private ArrayList<Employee> employees = new ArrayList<>();
     private ArrayList<Employee> employeesSelected = new ArrayList<>();
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,7 +264,7 @@ public class GenerateProcessActivity extends AppCompatActivity {
     }
 
     private void createDialog() {
-        final Dialog dialog = new Dialog(this);
+        dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.layout_bottomsheet);
         dialog.show();
@@ -291,17 +292,12 @@ public class GenerateProcessActivity extends AppCompatActivity {
                 if (cRatio <= 0.1){
                     dataGenerate.child("consistency").setValue(cRatio);
                     dataGenerate.child("period_id").setValue(selectedValue);
+                    dataGenerate.child("status").setValue("active");
                     for (int i = 0; i < bobot.length; i++){
                         GenerateValue generateValue =  new GenerateValue(topicSelected.get(i).getName(), bobot[i], topicSelected.get(i).getKey());
                         dataGenerate.child("topics").push().setValue(generateValue);
                     }
-                    createEmployeePerformance();
-                    dialog.dismiss();
-                    Toast.makeText(GenerateProcessActivity.this, "Generate Value is Success", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(GenerateProcessActivity.this, GenerateActivity.class);
-                    intent.putExtra("generate", "success");
-                    startActivity(intent);
-                    finish();
+                    createEmployeePerformance(dataGenerate.getKey());
                 } else {
                     Snackbar snackbar = Snackbar.make(dialog.getWindow().findViewById(R.id.llcBottomSheet), "this Value is not consistent, Please make new Value", Snackbar.LENGTH_LONG);
                     snackbar.show();
@@ -311,7 +307,7 @@ public class GenerateProcessActivity extends AppCompatActivity {
         addView();
     }
 
-    private void createEmployeePerformance() {
+    private void createEmployeePerformance(String generate_id) {
         DatabaseReference mReference = FirebaseDatabase.getInstance().getReference();
         mReference.child("divisions").addValueEventListener(new ValueEventListener() {
             @Override
@@ -331,7 +327,7 @@ public class GenerateProcessActivity extends AppCompatActivity {
                                         employees.add(employee);
                                     }
                                     if (employees.size() >= 4 ){
-                                        if (employees.stream().anyMatch(employee -> employee.getRole() != null && employee.getRole().equals("leader"))){
+                                        if (employees.stream().anyMatch(employee -> employee.getRole() != null && employee.getRole().equals("2"))){
                                             Log.d(TAG, "onDataChangeTestCount: " + dataSnapshot.getKey() + " match");
                                             String division_id = dataSnapshot.getKey();
                                             Log.d(TAG, "onDataChangeTestKey: " + division_id);
@@ -351,7 +347,7 @@ public class GenerateProcessActivity extends AppCompatActivity {
                                                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                                                             Appraisal appraisal = new Appraisal(employee.getKey());
                                                             Log.d(TAG, "onDataChangeTestPerformancer: " + appraisal.getEmployee_id());
-                                                            DatabaseReference refPerform = reference.child("t_appraisal").child(division_id).child(appraisal.getEmployee_id());
+                                                            DatabaseReference refPerform = reference.child("t_appraisal").child(generate_id).child(division_id).child(appraisal.getEmployee_id());
                                                             refPerform.setValue(employee.getKey());
                                                             for (int i = 0; i < employeesSelected.size(); i++) {
                                                                 if (!employeesSelected.get(i).getKey().equals(appraisal.getEmployee_id())){
@@ -363,6 +359,12 @@ public class GenerateProcessActivity extends AppCompatActivity {
                                                             }
                                                         }
                                                     }
+                                                    dialog.dismiss();
+                                                    Toast.makeText(GenerateProcessActivity.this, "Generate Value is Success", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(GenerateProcessActivity.this, GenerateActivity.class);
+                                                    intent.putExtra("generate", "success");
+                                                    startActivity(intent);
+                                                    finish();
                                                 }
 
                                                 @Override

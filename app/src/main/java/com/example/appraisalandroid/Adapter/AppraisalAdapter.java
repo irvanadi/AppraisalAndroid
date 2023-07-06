@@ -3,6 +3,7 @@ package com.example.appraisalandroid.Adapter;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appraisalandroid.Models.Employee;
+import com.example.appraisalandroid.Page.Employee.Appraisal.QuestionerActivity;
 import com.example.appraisalandroid.R;
 
 import java.util.ArrayList;
@@ -56,6 +59,15 @@ public class AppraisalAdapter extends RecyclerView.Adapter<AppraisalAdapter.View
                     break;
             }
         }
+        holder.cvAppraisal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, QuestionerActivity.class);
+                intent.putExtra("generate_id", employee.generate_id);
+                intent.putExtra("performance_id", employee.getKey());
+                context.startActivity(intent);
+            }
+        });
         Log.d(TAG, "onBindViewHolder: " + employee.getGenerate_id());
     }
 
@@ -66,6 +78,7 @@ public class AppraisalAdapter extends RecyclerView.Adapter<AppraisalAdapter.View
         }
     };
 
+
     @Override
     public int getItemCount() {
         return employees.size();
@@ -74,11 +87,13 @@ public class AppraisalAdapter extends RecyclerView.Adapter<AppraisalAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtName, txtRole;
+        CardView cvAppraisal;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
             txtRole = itemView.findViewById(R.id.txtRole);
+            cvAppraisal = itemView.findViewById(R.id.cvAppraisal);
         }
     }
 

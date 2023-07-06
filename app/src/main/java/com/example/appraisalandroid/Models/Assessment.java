@@ -2,8 +2,10 @@ package com.example.appraisalandroid.Models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class Assessment {
+public class Assessment implements Serializable {
 
     public String key, name, topic_id;
     public Assessment(){};
