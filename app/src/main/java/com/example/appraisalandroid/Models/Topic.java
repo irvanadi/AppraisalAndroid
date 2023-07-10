@@ -7,11 +7,11 @@ import java.util.ArrayList;
 @IgnoreExtraProperties
 public class Topic {
 
-    public String name, key, performance_id;
+    public String name, key, performance_id, generate_id;
     public Assessment assessment;
     public ArrayList<Assessment> assessments;
 
-    public Topic(){};
+    public Topic(){}
     public Topic(String name) {
         this.name = name;
     }
@@ -54,5 +54,13 @@ public class Topic {
 
     public void setPerformance_id(String performance_id) {
         this.performance_id = performance_id;
+    }
+
+    public String getGenerate_id() {
+        return generate_id;
+    }
+
+    public void setGenerate_id(String generate_id) {
+        this.generate_id = generate_id;
     }
 }

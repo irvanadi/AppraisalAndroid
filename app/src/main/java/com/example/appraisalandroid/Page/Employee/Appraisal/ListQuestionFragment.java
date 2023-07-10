@@ -1,7 +1,9 @@
 package com.example.appraisalandroid.Page.Employee.Appraisal;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +45,7 @@ public class ListQuestionFragment extends Fragment {
     private ArrayList<Topic> topics = new ArrayList<>();
     private ArrayList<Assessment> assessments = new ArrayList<>();
     private ListQuestionAdapter listQuestionAdapter;
+    private SharedPreferences sharedPreferences;
 
     public ListQuestionFragment() {
         // Required empty public constructor
@@ -56,6 +60,8 @@ public class ListQuestionFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         generate_id = getActivity().getIntent().getStringExtra("generate_id");
         performance_id = getActivity().getIntent().getStringExtra("performance_id");
+        sharedPreferences = getActivity().getSharedPreferences("employee_info", MODE_PRIVATE);
+//        employee_division = sharedPreferences.getString("division", "");
 
         initRecyclerView();
         loadData();
@@ -89,21 +95,22 @@ public class ListQuestionFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot1) {
                                 if (snapshot1.exists()){
-                                    assessments.clear();
+                                    ArrayList<Assessment> assessments1 = new ArrayList<>();
                                     for(DataSnapshot dataSnapshot1: snapshot1.getChildren()){
                                         Assessment assessment = dataSnapshot1.getValue(Assessment.class);
                                         assessment.setKey(dataSnapshot1.getKey());
                                         Log.d(TAG, "onDataChange223: " + assessment.getName());
-                                        assessments.add(assessment);
+                                        assessments1.add(assessment);
                                     }
                                     topic.setPerformance_id(performance_id);
-                                    topic.setAssessments(assessments);
-                                    topics.add(topic);
-                                } else {
-                                    topics.add(topic);
+                                    topic.setAssessments(assessments1);
+                                    topic.setGenerate_id(generate_id);
+                                    for (Assessment assessment: topic.getAssessments()){
+                                        Log.d(TAG, "onDataChangeQuestion: " + assessment.getName());
+                                    }
                                 }
+                                topics.add(topic);
                                 listQuestionAdapter.notifyDataSetChanged();
-
                             }
 
                             @Override

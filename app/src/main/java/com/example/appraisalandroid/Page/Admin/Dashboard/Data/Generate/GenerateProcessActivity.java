@@ -322,9 +322,11 @@ public class GenerateProcessActivity extends AppCompatActivity {
                                 if (snapshot1.exists()){
                                     employees.clear();
                                     for (DataSnapshot dataSnapshot1 : snapshot1.getChildren()){
-                                        Employee employee = dataSnapshot1.getValue(Employee.class);
-                                        employee.setKey(dataSnapshot1.getKey());
-                                        employees.add(employee);
+                                        if (!dataSnapshot1.child("role").getValue().toString().equals("3")){
+                                            Employee employee = dataSnapshot1.getValue(Employee.class);
+                                            employee.setKey(dataSnapshot1.getKey());
+                                            employees.add(employee);
+                                        }
                                     }
                                     if (employees.size() >= 4 ){
                                         if (employees.stream().anyMatch(employee -> employee.getRole() != null && employee.getRole().equals("2"))){
@@ -640,4 +642,11 @@ public class GenerateProcessActivity extends AppCompatActivity {
 //            }
 //        });
 //    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        generateProcessAdapter.notifyDataSetChanged();
+    }
 }

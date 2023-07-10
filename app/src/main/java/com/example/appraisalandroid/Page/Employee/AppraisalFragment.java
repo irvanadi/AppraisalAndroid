@@ -95,48 +95,69 @@ public class AppraisalFragment extends Fragment {
                         Employee employee = dataSnapshot.getValue(Employee.class);
                         employeeKey = dataSnapshot.getKey();
                         divisionKey = employee.getDivision_id();
-                        databaseReference.child("t_appraisal").child(divisionKey).addValueEventListener(new ValueEventListener() {
+                        databaseReference.child("gen_values").orderByChild("status").equalTo("active").addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
-                                if (snapshot1.exists()){
-                                    if (snapshot1.child("generate_id").getValue() != null) generateKey = snapshot1.child("generate_id").getValue().toString();
-                                    Log.d(TAG, "onDataChangekey: " + generateKey);
-                                    for (DataSnapshot dataSnapshot1 : snapshot1.getChildren()){
-                                        if (!dataSnapshot1.getKey().equals(employeeKey)){
-                                            Log.d(TAG, "onDataChange1: " + dataSnapshot1.getKey());
-                                            Log.d(TAG, "onDataChange2: " + dataSnapshot1.child("rater").getValue());
-                                            employees.clear();
-                                            for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("rater").getChildren()){
-                                                if (dataSnapshot2.getValue(Rater.class).getRater_id().equals(employeeKey)){
-                                                    Log.d(TAG, "onDataChange3: " + dataSnapshot2.getValue());
-                                                    Log.d(TAG, "onDataChange4Perform: " + dataSnapshot1.getKey());
-                                                    databaseReference.child("employees").child(dataSnapshot1.getKey()).addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot snapshot3) {
-                                                            if (snapshot3.exists()){
-                                                                Employee employeePerform = snapshot3.getValue(Employee.class);
-                                                                Log.d(TAG, "onDataChange23: " + employee.getRole());
-                                                                employeePerform.setGenerate_id(generateKey);
-                                                                employeePerform.setKey(snapshot3.getKey());
-                                                                employees.add(employeePerform);
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()){
+                                    for (DataSnapshot dataSnapshot1: snapshot.getChildren()){
+                                        GenValue genValue = new GenValue();
+                                        genValue.setKey(dataSnapshot1.getKey());
+                                        genValue.setConsistency(dataSnapshot1.child("consistency").getValue(Double.class));
+                                        genValue.setPeriod_id(dataSnapshot1.child("period_id").getValue().toString());
+                                        generateKey = dataSnapshot1.getKey();
+                                        databaseReference.child("t_appraisal").child(generateKey).child(divisionKey).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+                                                if (snapshot1.exists()){
+//                                                    if (snapshot1.child("generate_id").getValue() != null) generateKey = snapshot1.child("generate_id").getValue().toString();
+                                                    Log.d(TAG, "onDataChangekey: " + generateKey);
+                                                    for (DataSnapshot dataSnapshot1 : snapshot1.getChildren()){
+                                                        if (!dataSnapshot1.getKey().equals(employeeKey)){
+                                                            Log.d(TAG, "onDataChange1: " + dataSnapshot1.getKey());
+                                                            Log.d(TAG, "onDataChange2: " + dataSnapshot1.child("rater").getValue());
+                                                            employees.clear();
+                                                            for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("rater").getChildren()){
+                                                                if (dataSnapshot2.getValue(Rater.class).getRater_id().equals(employeeKey)){
+                                                                    Log.d(TAG, "onDataChange3: " + dataSnapshot2.getValue());
+                                                                    Log.d(TAG, "onDataChange4Perform: " + dataSnapshot1.getKey());
+                                                                    databaseReference.child("employees").child(dataSnapshot1.getKey()).addValueEventListener(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(@NonNull DataSnapshot snapshot3) {
+                                                                            if (snapshot3.exists()){
+                                                                                Employee employeePerform = snapshot3.getValue(Employee.class);
+                                                                                Log.d(TAG, "onDataChange23: " + employee.getRole());
+                                                                                employeePerform.setGenerate_id(generateKey);
+                                                                                employeePerform.setKey(snapshot3.getKey());
+                                                                                employees.add(employeePerform);
 //                                                                if (employees.size() >= 2){
 //                                                                    Collections.sort(employees, );
 //                                                                }
-                                                                appraisalAdapter.notifyDataSetChanged();
-                                                            }
-                                                        }
+                                                                                appraisalAdapter.notifyDataSetChanged();
+                                                                            }
+                                                                        }
 
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError error) {
-                                                            Log.e(TAG, "onCancelled: ", error.toException());
-                                                        }
-                                                    });
+                                                                        @Override
+                                                                        public void onCancelled(@NonNull DatabaseError error) {
+                                                                            Log.e(TAG, "onCancelled: ", error.toException());
+                                                                        }
+                                                                    });
 //                                                    performance_employee.add(dataSnapshot1.getKey());
+                                                                }
+                                                            }
+                                                            saveEmployeeId();
+                                                        }
+                                                    }
                                                 }
                                             }
-                                            saveEmployeeId();
-                                        }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                Log.e(TAG, "onCancelled: ", error.toException());
+                                            }
+                                        });
                                     }
+
+
                                 }
                             }
 
@@ -145,6 +166,56 @@ public class AppraisalFragment extends Fragment {
                                 Log.e(TAG, "onCancelled: ", error.toException());
                             }
                         });
+//                        databaseReference.child("t_appraisal").child(divisionKey).addValueEventListener(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+//                                if (snapshot1.exists()){
+//                                    if (snapshot1.child("generate_id").getValue() != null) generateKey = snapshot1.child("generate_id").getValue().toString();
+//                                    Log.d(TAG, "onDataChangekey: " + generateKey);
+//                                    for (DataSnapshot dataSnapshot1 : snapshot1.getChildren()){
+//                                        if (!dataSnapshot1.getKey().equals(employeeKey)){
+//                                            Log.d(TAG, "onDataChange1: " + dataSnapshot1.getKey());
+//                                            Log.d(TAG, "onDataChange2: " + dataSnapshot1.child("rater").getValue());
+//                                            employees.clear();
+//                                            for (DataSnapshot dataSnapshot2 : dataSnapshot1.child("rater").getChildren()){
+//                                                if (dataSnapshot2.getValue(Rater.class).getRater_id().equals(employeeKey)){
+//                                                    Log.d(TAG, "onDataChange3: " + dataSnapshot2.getValue());
+//                                                    Log.d(TAG, "onDataChange4Perform: " + dataSnapshot1.getKey());
+//                                                    databaseReference.child("employees").child(dataSnapshot1.getKey()).addValueEventListener(new ValueEventListener() {
+//                                                        @Override
+//                                                        public void onDataChange(@NonNull DataSnapshot snapshot3) {
+//                                                            if (snapshot3.exists()){
+//                                                                Employee employeePerform = snapshot3.getValue(Employee.class);
+//                                                                Log.d(TAG, "onDataChange23: " + employee.getRole());
+//                                                                employeePerform.setGenerate_id(generateKey);
+//                                                                employeePerform.setKey(snapshot3.getKey());
+//                                                                employees.add(employeePerform);
+////                                                                if (employees.size() >= 2){
+////                                                                    Collections.sort(employees, );
+////                                                                }
+//                                                                appraisalAdapter.notifyDataSetChanged();
+//                                                            }
+//                                                        }
+//
+//                                                        @Override
+//                                                        public void onCancelled(@NonNull DatabaseError error) {
+//                                                            Log.e(TAG, "onCancelled: ", error.toException());
+//                                                        }
+//                                                    });
+////                                                    performance_employee.add(dataSnapshot1.getKey());
+//                                                }
+//                                            }
+//                                            saveEmployeeId();
+//                                        }
+//                                    }
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//                                Log.e(TAG, "onCancelled: ", error.toException());
+//                            }
+//                        });
                     }
                 }
             }

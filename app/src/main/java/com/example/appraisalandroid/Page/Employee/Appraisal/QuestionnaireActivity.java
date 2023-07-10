@@ -38,7 +38,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private ArrayList<Assessment> assessments;
     private TextView txtAnswer1, txtAnswer2, txtAnswer3, txtAnswer4, txtAnswer5, txtQuestion;
     private int count = 0;
-    private String answer, performance_id = "", employee_id, employee_role, employee_division, topic_id;
+    private String answer, performance_id = "", employee_id, employee_role, employee_division, topic_id, generate_id;
     private DatabaseReference databaseReference;
     private ArrayList<Answer> answers = new ArrayList<>();
     private SharedPreferences sharedPreferences;
@@ -61,14 +61,21 @@ public class QuestionnaireActivity extends AppCompatActivity {
         questions = getIntent().getStringArrayListExtra("assessments");
         questionsKey = getIntent().getStringArrayListExtra("assessmentsKey");
         topic_id = getIntent().getStringExtra("topic_id");
+        generate_id = getIntent().getStringExtra("generate_id");
         sharedPreferences = getSharedPreferences("employee_info", MODE_PRIVATE);
         fabFinish = findViewById(R.id.fabFinish);
 
         txtQuestion.setText(questions.get(count));
         Log.d(TAG, "onCreate: " + questions.get(count));
+        Log.d(TAG, "onCreate1: " + questions);
+        Log.d(TAG, "onCreate2: " + questionsKey);
 
         Log.d(TAG, "onCreate: " + questions.size());
 
+        if (count == (questions.size() - 1)){
+            fabNext.setVisibility(View.GONE);
+            fabFinish.setVisibility(View.VISIBLE);
+        }
 
         cvAnswer1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +176,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
         if (!employee_id.equals("") && !employee_role.equals("") && !employee_division.equals("") &&
                 answer2.getAssessment_id() != null && answer2.getTopic_id() != null && answer2.getValue() != null){
-            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){
@@ -186,14 +193,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
                                             answer1.getEmployee_id().equals(answer2.getEmployee_id()) && answer1.getTopic_id().equals(answer2.getTopic_id()))
                                     .findFirst().get().getKey();
                         }
-//                        if (answers.stream().anyMatch(answer1 -> answer1.getAssessment_id().equals(answer2.getAssessment_id()) &&
-//                                        answer1.getEmployee_id().equals(answer2.getEmployee_id()) && answer1.getTopic_id().equals(answer2.getTopic_id()))){
-//                            key = answers.stream().filter(answer1 -> answer1.getAssessment_id().equals(answer2.getAssessment_id()) &&
-//                                            answer1.getEmployee_id().equals(answer2.getEmployee_id()) && answer1.getTopic_id().equals(answer2.getTopic_id()))
-//                                    .findFirst().get().getKey();
-//                        }
+
                         if (key != null){
-                            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").child(key).setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").child(key).setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
@@ -204,7 +206,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                             });
                         } else {
                             Log.d(TAG, "saveAndExit: key not exist");
-                            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
@@ -216,7 +218,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                         }
                     } else {
                         Log.d(TAG, "saveAndExit: snapshot not exist");
-                        databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){
@@ -233,28 +235,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                     Log.e(TAG, "onCancelled: ", error.toException());
                 }
             });
-//            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if (task.isSuccessful()){
-//                        count++;
-//                        clearAll();
-//                    }
-//                }
-//            });
         }
-
-//        if (!employee_id.equals("") && !employee_role.equals("") && !employee_division.equals("") &&
-//                answer2.getAssessment_id() != null && answer2.getTopic_id() != null && answer2.getValue() != null){
-//            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if (task.isSuccessful()){
-//                        finish();
-//                    }
-//                }
-//            });
-//        }
     }
 
     private void saveAndVisible() {
@@ -271,6 +252,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
             fabNext.setVisibility(View.GONE);
             fabFinish.setVisibility(View.VISIBLE);
         }
+        txtQuestion.setText(questions.get(count));
     }
 
     private void saveAnswer() {
@@ -286,7 +268,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
         if (!employee_id.equals("") && !employee_role.equals("") && !employee_division.equals("") &&
         answer2.getAssessment_id() != null && answer2.getTopic_id() != null && answer2.getValue() != null){
-            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){
@@ -305,7 +287,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                                     .findFirst().get().getKey();
                         }
                         if (key != null){
-                            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").child(key).setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").child(key).setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
@@ -315,7 +297,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
@@ -326,7 +308,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                             });
                         }
                     } else {
-                        databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        databaseReference.child("t_appraisal").child(generate_id).child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){
@@ -343,15 +325,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
                     Log.e(TAG, "onCancelled: ", error.toException());
                 }
             });
-//            databaseReference.child("t_appraisal").child(employee_division).child(performance_id).child("value").push().setValue(answer2).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    if (task.isSuccessful()){
-//                        count++;
-//                        clearAll();
-//                    }
-//                }
-//            });
         }
     }
 }

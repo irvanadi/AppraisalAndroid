@@ -23,6 +23,11 @@ import com.example.appraisalandroid.Models.Topic;
 import com.example.appraisalandroid.Page.Admin.Dashboard.Data.Employee.AddEmployee2Fragment;
 import com.example.appraisalandroid.Page.Employee.Appraisal.QuestionnaireActivity;
 import com.example.appraisalandroid.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -30,6 +35,8 @@ public class ListQuestionAdapter extends RecyclerView.Adapter<ListQuestionAdapte
 
     private Context context;
     private ArrayList<Topic> topics;
+    private ArrayList<Assessment> assessments2;
+    private DatabaseReference databaseReference;
 
     public ListQuestionAdapter(Context context, ArrayList<Topic> topics) {
         this.context = context;
@@ -41,14 +48,34 @@ public class ListQuestionAdapter extends RecyclerView.Adapter<ListQuestionAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_question, parent, false);
         ViewHolder holder = new ViewHolder(v);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Topic topic = topics.get(position);
+//        databaseReference.child("assessments").child(topic.getKey()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()){
+//                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                        Assessment assessment = dataSnapshot.getValue(Assessment.class);
+//                        assessments2.add(assessment);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e(TAG, "onCancelled: ", error.toException());
+//            }
+//        });
         if (topic.getName() != null) holder.txtTopic.setText(topic.getName());
         if (topic.getAssessments() != null){
+            for (Assessment assessment: topic.getAssessments()){
+                Log.d(TAG, "onBindViewHolder: " + position + " " + assessment.getName());
+            }
             if (topic.getAssessments().size() > 1){
                 holder.txtTotalQuestion.setText(String.valueOf(topic.getAssessments().size()) + " Questions");
             } else {
@@ -74,6 +101,7 @@ public class ListQuestionAdapter extends RecyclerView.Adapter<ListQuestionAdapte
                     intent.putStringArrayListExtra("assessmentsKey", questionsKey);
                     intent.putExtra("assessmentsList", topic.getAssessments());
                     intent.putExtra("topic_id", topic.getKey());
+                    intent.putExtra("generate_id", topic.getGenerate_id());
                     context.startActivity(intent);
                 }
             }
